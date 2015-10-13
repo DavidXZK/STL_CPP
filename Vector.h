@@ -1,5 +1,5 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef VECTOR_C_H
+#define VECTOR_C_H
 #include <iostream>
 using namespace std;
 
@@ -74,10 +74,25 @@ class Vector
 			return objects[theSize-1];
 		} 
 		enum { SPARE_CAPACITY = 16 };
+		typedef Object* iterator;
+		typedef const Object* const_iterator;
+
+		iterator begin(){
+			return &objects[0];
+		}
+		iterator end(){
+			return &objects[theSize - 1];
+		}
+		const_iterator begin() const{
+			return &objects[0];
+		}
+		const_iterator end() const{
+			return &objects[theSize - 1];
+		}
 
 	private:
 		int theSize;
 		int theCapcity;
 		Object *objects;
 };
-#endif //VECTOR_H
+#endif //VECTOR_C_H
