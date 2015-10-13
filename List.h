@@ -41,6 +41,27 @@ class List{
 		}
 	public:
 		class const_iterator{
+			public:
+				const_iterator():current(NULL){}   //构造函数
+				const Object& operator*() const{
+					return retrieve();
+				}
+				const_iterator& operator++(){     //前缀
+					current = current->next;
+					return *this;
+				}
+				const_iterator& operator++(int){   //后缀
+					const_iterator old = *this;
+					++(*this);
+					return old;
+				}
+
+			private:
+				Node* current;
+				Object& retrieve() const{
+					return current->data;
+				}
+
 
 		};
 		class iterator:const_iterator{
