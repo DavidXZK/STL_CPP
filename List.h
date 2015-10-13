@@ -55,6 +55,10 @@ class List{
 					++(*this);
 					return old;
 				}
+				bool operator==(const const_iterator &rhs) const{
+					return current == rhs.current;
+				}
+				bool operator!=
 
 			private:
 				Node* current;
