@@ -30,6 +30,18 @@ class List{
 			}
 			
 		}
+		iterator begin(){
+			return iterator(head->next);
+		}
+		const_iterator begin() const{
+			return const_iterator(head->next);
+		}
+		iterator end(){
+			return iterator(tail);
+		}
+		const_iterator end() const{
+			return const_iterator(tail);
+		}
 		int size() const{
 			return theSize;
 		}
@@ -39,13 +51,22 @@ class List{
 		void clear(){
 
 		}
+		Object& front(){
+			return *begin();
+		}
+		const Object& front() const{
+			return *begin();
+		}
+		
 	public:
 		class const_iterator{
 			public:
 				const_iterator():current(NULL){}   //构造函数
-				const Object& operator*() const{
+
+				const Object& operator*() const{   //取值
 					return retrieve();
 				}
+
 				const_iterator& operator++(){     //前缀
 					current = current->next;
 					return *this;
@@ -55,22 +76,44 @@ class List{
 					++(*this);
 					return old;
 				}
+
 				bool operator==(const const_iterator &rhs) const{
 					return current == rhs.current;
 				}
 				bool operator!=(const const_iterator &rhs) const{
-					return current != rhs.current;
+					return !(*this == rhs);
 				}
 
-			private:
+			protected:
 				Node* current;
 				Object& retrieve() const{
 					return current->data;
 				}
-
+				const_iterator(Node*p):current(p){}
 
 		};
-		class iterator:const_iterator{
+		class iterator: public const_iterator{
+			public:
+				iterator(){}
+				Object& operator*(){
+					return retrieve();
+				}
+				const Object& operator*() const{
+					return const_iterator::operator*();
+				}
+
+				iterator& operator++(){
+					current = current->next;
+					return *this;
+				}
+
+				iterator& operator++(int){
+					iterator old = *this;
+					++(*this);
+					return old;
+				}
+			protected:
+				iterator(Node*p):const_iterator(p){}
 
 		};
 	private:
